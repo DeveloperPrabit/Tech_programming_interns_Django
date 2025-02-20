@@ -1526,3 +1526,31 @@ img {
 /* ====== The End ====== */
 
 /*# sourceMappingURL=style.css.map */
+.footer-social-info {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-social-info a {
+  margin: 0 10px; /* Increase spacing */
+  font-size: 20px !important; /* Increase icon size */
+  transition: 0.3s;
+  display: inline-block;
+}
+
+
+.footer-social-info a .fa {
+  transition: 0.3s;
+}
+
+.footer-social-info a .fa-pinterest { color: #BD081C; }  /* Pinterest - Red */
+.footer-social-info a .fa-facebook { color: #1877F2; }   /* Facebook - Blue */
+.footer-social-info a .fa-twitter { color: #1DA1F2; }    /* Twitter - Light Blue */
+.footer-social-info a .fa-dribbble { color: #EA4C89; }   /* Dribbble - Pink */
+.footer-social-info a .fa-behance { color: #1769FF; }    /* Behance - Blue */
+.footer-social-info a .fa-linkedin { color: #0A66C2; }   /* LinkedIn - Dark Blue */
+
+.footer-social-info a:hover .fa {
+  opacity: 0.7;
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
