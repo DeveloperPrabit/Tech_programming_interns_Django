@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Your news portal description here">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>{{ page_title }} - {{ site_name }}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    {% block header %}{% endblock header %}
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+
+    <style>
+        #post-list:empty::after {
+            content: "No post listed yet.";
+            color: var(--gray);
+            text-align: center;
+            font-style: italic;
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    {% include 'main/top-navigation.html' %}
+
+
+    <!-- Main Content -->
+    {% block content %}{% endblock content %}
+
+    <!-- Footer -->
+    {% include 'main/footer.html' %}
+
+    <!-- JavaScript Files -->
+    <script src="{% static 'js/bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/plugins.js' %}"></script>
+    <script src="{% static 'js/active.js' %}"></script>
+
+    {% block javascripts %}{% endblock javascripts %}
+
+    <script>
+        $(document).ready(function () {
+            // Hide preloader when page is fully loaded
+            $(window).on("load", function () {
+                $(".preloader").fadeOut("slow");
+            });
+
+            // Handle empty post list
+            if ($('#post-list').children().length === 0) {
+                $('#post-list').html('');
+            }
+        });
+    </script>
+</body>
+
+</html>
