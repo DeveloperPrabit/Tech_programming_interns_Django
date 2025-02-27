@@ -1231,3 +1231,46 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/* for header:*/
+    .header-date {
+            list-style-type: none;
+            display: flex;
+            gap: 20px; /* Adjust the gap value as needed */
+            margin: 0; /* Remove default margin from the list */
+            padding: 0; /* Remove default padding */
+        }
+
+        .header-date li {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-date a {
+            text-decoration: none;
+            color: inherit; /* Ensure the text color is inherited */
+        }
+
+        .header-date li span {
+            margin-right: 8px; /* Adds space between the icon and text */
+        }
+
+        .header-top ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-info-left li, .header-info-right li {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Adjust for smaller screen sizes */
+        @media (max-width: 767px) {
+            .header-date {
+                gap: 15px;
+            }
+        }

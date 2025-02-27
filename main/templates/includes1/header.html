@@ -1,11 +1,16 @@
 {% load static %}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
 <header>
     <!-- Header Start -->
     <div class="header-area">
         <div class="main-header">
             <!-- Top Header -->
             <div class="header-top bg-danger text-white d-none d-sm-block">
-                <div class="container">
+                <div class="container_fluid">
                     <div class="col-xl-12">
                         <div class="row d-flex justify-content-between align-items-center">
                             <div class="header-info-left">
@@ -14,11 +19,28 @@
                                     <li><i class="fa fa-envelope"></i> {{ first_page.email }}</li>
                                 </ul>
                             </div>
-                            <div class="header-info-right">
-                                <ul class="header-date">
-                                    <a href="#"><li><span class="flaticon-calendar"></span> Admin</li></a>
+                            <div class="header-info-right ms-auto">
+                                <ul class="navbar-nav m-0 bg-danger">
+                                    {% if request.user.is_authenticated %}
+                                    <li class="nav-item">
+                                        <a class="text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fas fa-user-circle me-2"></i> Welcome, {{ user.username }}
+                                        </a>
+                                        <ul class="dropdown-menu bg-danger">
+                                            <li><a class="dropdown-item text-white" href="{% url 'logout' %}">LogOut</a></li>
+                                        </ul>
+                                        
+                                    </li>
+                                    {% else %}
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{% url 'LoginPage' %}">
+                                            <i class="fas fa-sign-in-alt me-2"></i>SIGN IN
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
+                                                       
                         </div>
                     </div>
                 </div>
@@ -34,11 +56,7 @@
                                 <a href="#"><h3 class="text-white">Online News Portal</h3></a>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-lg-9 col-md-9">
-                            <div class="header-banner f-right">
-                                <img src="{% static 'assets1/img/gallery/header_card.png' %}" alt="Header Banner">
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -80,7 +98,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Mobile Menu -->
                         <div class="col-12">
                             <div class="mobile_menu d-block d-md-none"></div>

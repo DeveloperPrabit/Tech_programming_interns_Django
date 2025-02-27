@@ -25,11 +25,19 @@ class Subcategory(models.Model):
     
 
 class News(models.Model):
+    DRAFT = 'draft'
+    SUBMITTED = 'submitted'
+    PUBLISHED = 'published'
+    STATUS_CHOICES = [
+        (DRAFT, 'Draft'),
+        (SUBMITTED, 'Submitted'),
+        (PUBLISHED, 'Published'),
+    ]
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory_id = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     posttitle = models.TextField(blank=True)
     postdetails = models.TextField(blank=True)
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=DRAFT, null=True)
     postimage = models.ImageField(upload_to='media/news/images')  # Image field
     postvideo = models.FileField(upload_to='media/news/videos', blank=True, null=True)  # Video field
     postedby = models.CharField(max_length=50)
@@ -59,3 +67,11 @@ class Comments(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+'''class Feedback(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback by {self.user} on {self.article}"'''

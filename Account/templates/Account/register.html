@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Online News Portal System | Register</title>
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Nunito|Poppins" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div class="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a href="{% url 'index' %}" class="logo d-flex align-items-center w-auto">
+                  <span class="d-none d-lg-block">Online News Portal</span>
+                </a>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                    <p class="text-center small">Enter your details to register</p>
+                  </div>
+                  {% if messages %}
+                  <div class="alert-container">
+                      {% for message in messages %}
+                          <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                              {{ message }}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="window.location.reload();">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% endif %}
+      
+      
+                  <form class="row g-3 needs-validation" method="post" action="">
+                    {% csrf_token %}
+
+                    <div class="col-12">
+                      <label for="username" class="form-label">Username</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="username" class="form-control" id="username" required>
+                        <div class="invalid-feedback">Please choose a username.</div>
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="email" name="email" class="form-control" id="email" required>
+                      <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="password1" class="form-label">Password</label>
+                      <input type="password" name="password1" class="form-control" id="password1" required>
+                      <div class="invalid-feedback">Please enter a password.</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="password2" class="form-label">Confirm Password</label>
+                      <input type="password" name="password2" class="form-control" id="password2" required>
+                      <div class="invalid-feedback">Passwords must match.</div>
+                    </div>
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Register</button>
+                    </div>
+                    <div class="col-12">
+                        <p class="small mb-0">Already have an account? <a href="{% url 'LoginPage' %}">Login</a></p>
+                        <p class="small mb-0"><a href="{% url 'index' %}">Home</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>
