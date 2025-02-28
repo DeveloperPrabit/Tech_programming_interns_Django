@@ -61,7 +61,6 @@ def RegisterPage(request):
     # Render the registration page template
     return render(request, "Account/register.html")
 
-
-def logout_view(request):
-    logout(request)  # Logs the user out
-    return redirect('index') 
+def Log_out(request):
+    logout(request)
+    return redirect('index')  # Replace 'home' with your actual URL name

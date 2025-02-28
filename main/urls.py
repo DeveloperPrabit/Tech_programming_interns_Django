@@ -10,6 +10,9 @@ urlpatterns = [
     path("respect/",Respect,name="respect"),
     path('view_single_news/<str:id>',View_singlenews, name='view_single_news'),
     path('category/<int:id>/',Category_detail, name='category_detail'),
+    path('SearchNews/',Search, name='search_news'),
+
+
 
 
 

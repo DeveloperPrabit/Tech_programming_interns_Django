@@ -13,16 +13,7 @@
                         <div class="single-slider">
                             <div class="trending-top mb-30">
                                 <div class="trend-top-img">
-                                    {% if i.postvideo %}
-                                    <div class="video-container mt-5">
-                                        <video class="responsive-video" controls>
-                                            <source src="{{ i.postvideo.url }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                    {% else %}
                                     <img src="{{ i.postimage.url }}" alt="Post Image" class="responsive-img">
-                                    {% endif %}
                                     <div class="trend-top-cap">
                                         <span class="bgr">{{ i.cat_id.catname }}</span>
                                         <h2><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle }}</a></h2>

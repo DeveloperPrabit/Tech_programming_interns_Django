@@ -1,11 +1,9 @@
-{% extends 'base1.html' %}
+{% extends 'base1.html' %} 
 {% block content %}
 {% load static %}
+
 <section class="contact-section">
     <div class="container">
-
-
-
         <div class="row">
             <div class="col-12">
                 <h2 class="contact-title">Get in Touch</h2>
@@ -16,25 +14,30 @@
                     <span class="contact-info__icon"><i class="ti-home"></i></span>
                     <div class="media-body">
                         <h3>Address</h3>
-                        <p>{{ page.address }}</p>
-                       
+                        <p>{{ first_page.address }}</p> 
                     </div>
                 </div>
                 <div class="media contact-info">
                     <span class="contact-info__icon"><i class="ti-tablet"></i></span>
                     <div class="media-body">
-                        <h3>{{ page.mobilenumber }}</h3>
+                        <h3>
+                            <a href="tel:{{ first_page.mobilenumber }}">{{ first_page.mobilenumber }}</a>
+                        </h3> <!-- Clickable Mobile Number -->
                         <p>Mon to Fri 9am to 6pm</p>
                     </div>
                 </div>
                 <div class="media contact-info">
                     <span class="contact-info__icon"><i class="ti-email"></i></span>
                     <div class="media-body">
-                        <h3>{{ page.email }}</h3>
+                        <h3>
+                            <a href="mailto:{{ first_page.email }}">{{ first_page.email }}</a>
+                        </h3> <!-- Clickable Email -->
                         <p>Send us your query anytime!</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </section> {% endblock %}
+</section>
+
+{% endblock %}

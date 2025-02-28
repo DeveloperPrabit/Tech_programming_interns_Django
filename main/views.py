@@ -5,7 +5,9 @@ from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib import messages
-
+from django.shortcuts import render
+from .models import News, Category
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -15,8 +17,7 @@ def BASE(request):
 
 def BASE1(request):    
        return render(request,'base1.html')
-from django.shortcuts import render
-from .models import News, Category
+
 
 def Index(request):
     postnews = News.objects.order_by('-posted_date')[:3]
@@ -33,17 +34,38 @@ def Index(request):
     return render(request, 'index.html', context)  # Correct indentation
 
 def About(request):
-    return render(request, 'aboutus.html')
+    first_page = Page.objects.first()
+    context = {
+        "first_page": first_page,  # Change key from "page" to "first_page"
+    }
+    return render(request, 'aboutus.html', context)
 
 def Contact(request):
-    return render(request, 'contactus.html')
+    first_page = Page.objects.first()
+    context = {
+        "first_page": first_page,  # Change key from "page" to "first_page"
+    }
+    return render(request, 'contactus.html', context)
 
-def category_detail(request):
+
+
+def Category_details(request):
     first_page = Page.objects.first()
     context = {
         "page": first_page,
     }
-    return render(request, 'contactus.html', context)
+    return render(request, 'includes1/header.html', context)
+
+def category_detail(request, id):
+    catid = get_object_or_404(Category, id=id)
+    news_list = News.objects.filter(cat_id=catid).order_by('-posted_date')  # Order by published date, or any other field
+    paginator = Paginator(news_list, 4)  # Show 5 news items per page
+
+    page_number = request.GET.get('page')
+    news = paginator.get_page(page_number)
+    
+    return render(request, 'categorywise_newsdetail.html', {'catid': catid, 'news': news})
+
 
 
 def View_singlenews(request, id):
@@ -69,7 +91,7 @@ def View_singlenews(request, id):
             email=request.POST['email'],
         )
         comment_obj.save()
-        return redirect('thank_you')  # Redirect to a thank you page or wherever you want
+        return redirect('respect')  # Redirect to a thank you page or wherever you want
 
     # Prepare the context data to be passed to the template
     context = {
@@ -88,40 +110,40 @@ def Respect(request):
     return render(request, 'thankyou.html')
 
 
-def SEARCH_NEWS(request):
-    if request.method == "GET":
-        query = request.GET.get('query', '')
-        if query:
-            # Filter records where posttitle, category name, or subcategory name contains the query
-            searchnews = News.objects.filter(
-                Q(posttitle__icontains=query) |
-                Q(cat_id__catname__icontains=query) |
-                Q(subcategory_id__subcatname__icontains=query)
-            ).select_related('cat_id', 'subcategory_id')  # Optimizing query
+def Search(request): 
+    query = request.GET.get('query', '').strip()  # Get query from GET request
+    
+    if query:
+        searchnews = News.objects.filter(
+            Q(posttitle__icontains=query) |
+            Q(cat_id__catname__icontains=query) |
+            Q(subcategory_id__subcatname__icontains=query)
+        ).select_related('cat_id', 'subcategory_id')  # Optimized query
 
-            if searchnews.exists():
-                messages.info(request, "Search results for: " + query)
-            else:
-                messages.info(request, "No records found for: " + query)
-            
-            # Set up pagination
-            paginator = Paginator(searchnews, 10)  # Show 10 search results per page
-            page = request.GET.get('page', 1)
-            
-            try:
-                searchnews_paginated = paginator.page(page)
-            except PageNotAnInteger:
-                searchnews_paginated = paginator.page(1)
-            except EmptyPage:
-                searchnews_paginated = paginator.page(paginator.num_pages)
-
-            return render(request, 'search-news.html', {
-                'searchnews': searchnews_paginated, 
-                'query': query,
-            })
+        if searchnews.exists():
+            messages.info(request, f"Search results for: {query}")
         else:
-            messages.info(request, "Please enter a search query.")  # Adding message for empty query
-            return render(request, 'search-news.html', {})
+            messages.info(request, f"No records found for: {query}")
+        
+        # Pagination
+        paginator = Paginator(searchnews, 10)  # 10 results per page
+        page = request.GET.get('page')
+
+        try:
+            searchnews_paginated = paginator.page(page)
+        except PageNotAnInteger:
+            searchnews_paginated = paginator.page(1)
+        except EmptyPage:
+            searchnews_paginated = paginator.page(paginator.num_pages)
+
+        return render(request, 'search-news.html', {
+            'searchnews': searchnews_paginated,
+            'query': query,
+        })
+    
+    else:
+        messages.info(request, "Please enter a search query.")  # Message for empty query
+        return render(request, 'search-news.html', {'searchnews': None})
         
 def Category_detail(request, id):
     catid = get_object_or_404(Category, id=id)
@@ -139,3 +161,5 @@ def Category_detail(request, id):
         'news': news,
         'category_counts': category_counts
     })
+
+
