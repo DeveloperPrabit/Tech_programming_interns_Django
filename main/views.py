@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login,logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Count
 from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import render
 from .models import News, Category
@@ -162,4 +164,42 @@ def Category_detail(request, id):
         'category_counts': category_counts
     })
 
+def LOGIN(request):
+    return render(request, 'login.html')  # Render login page if not authenticated
 
+
+
+def doLogin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')  # 'on' if checked, otherwise None
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            
+            # Set session expiry based on remember_me checkbox
+            if remember_me:
+                request.session.set_expiry(2592000)  # 30 days (in seconds)
+            else:
+                request.session.set_expiry(0)  # Session expires when browser is closed
+
+            # Redirect user based on their type
+            user_type = getattr(user, 'user_type', None)
+            if user_type == '1':  # Intern
+                return redirect(reverse('dashboard'))
+            elif user_type == '2':  # Reader
+                return redirect(reverse('dashboard'))
+        else:
+            # Show error message and keep the entered username and remember_me checkbox state
+            messages.error(request, 'Invalid username or password')
+            return render(request, 'login.html', {'username': username, 'remember_me': remember_me})
+
+    else:
+        # Handle non-POST requests (redirect to login page with an error message)
+        messages.error(request, 'Invalid request method')
+        return redirect(reverse('LOGIN'))#direct to login page
+
+    return render(request,'login.html')

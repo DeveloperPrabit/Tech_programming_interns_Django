@@ -16,3 +16,7 @@
 *.ico binary
 *.woff binary
 *.woff2 binary
+
+* text=auto
+*.js text
+*.css text

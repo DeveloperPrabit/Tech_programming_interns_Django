@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 EXTERNAL_APPS=[
     "main",
     "Account",
+    "NewsApp",
 
 ]
 INSTALLED_APPS.extend(EXTERNAL_APPS)
@@ -68,7 +69,7 @@ ROOT_URLCONF = "news_portals.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -82,6 +83,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "news_portals.wsgi.application"
+
 
 
 # Database
@@ -137,3 +139,22 @@ MEDIA_URL="media/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Custom User Model for your app
+AUTH_USER_MODEL = 'main.CustomUser'
+
+
+# Set the session cookie age (default is 2 weeks)
+SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
+
+# Ensure session cookies are secure (ensure this is True only if using HTTPS)
+SESSION_COOKIE_SECURE = True
+
+# Ensure session cookies are HTTP only (prevents JavaScript from accessing session cookies)
+SESSION_COOKIE_HTTPONLY = True
+
+# Set session expiry settings
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# Use database-backed sessions (default Django behavior)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

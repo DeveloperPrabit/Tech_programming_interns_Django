@@ -1,10 +1,24 @@
-
 from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
 
+class CustomUser(AbstractUser):
+    USER_TYPES = [
+        ('1', 'intern'),
+        ('2', 'reader')
+    ]
+    # user_type field with corrected default value
+    user_type = models.CharField(choices=USER_TYPES, max_length=50, default='1')  
+    profile_pic = models.ImageField(upload_to='profile_pics/')
+
+    # Resolve reverse accessor conflicts
+    groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
+
+    
 class Category(models.Model):
     catname = models.CharField(max_length=200)
     catdes = models.TextField(blank=True)
@@ -22,31 +36,19 @@ class Subcategory(models.Model):
 
     def __str__(self):
         return self.subcatname
-    
+
 
 class News(models.Model):
-    DRAFT = 'draft'
-    SUBMITTED = 'submitted'
-    PUBLISHED = 'published'
-    STATUS_CHOICES = [
-        (DRAFT, 'Draft'),
-        (SUBMITTED, 'Submitted'),
-        (PUBLISHED, 'Published'),
-    ]
     cat_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory_id = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
     posttitle = models.TextField(blank=True)
     postdetails = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default=DRAFT, null=True)
-    postimage = models.ImageField(upload_to='media/news/images')  # Image field
-    postvideo = models.FileField(upload_to='media/news/videos', blank=True, null=True)  # Video field
+    status = models.CharField(max_length=50)
+    postimage = models.ImageField(upload_to='media/news')
     postedby = models.CharField(max_length=50)
-    posted_date = models.DateTimeField(auto_now_add=True)
+    posted_date= models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     updatedby = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.posttitle
 
 class Page(models.Model):
     pagetitle = models.CharField(max_length=250)
@@ -67,11 +69,3 @@ class Comments(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-'''class Feedback(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Feedback by {self.user} on {self.article}"'''
