@@ -28,13 +28,13 @@
                         <li><i class="fa fa-envelope"></i> 
                             <a href="mailto:{{ first_page.email|default:'N/A' }}" class="text-white">{{ first_page.email|default:'info@onlinenewsportal.com' }}</a>
                         </li>
-                        <div class="header-info-right">
+                        <!---<div class="header-info-right">
                             <ul class="header-date">
                                 <a href="{% url 'login' %}"><li><span class="flaticon-calendar"></span> Admin</li></a>
                             </ul>
-                        </div>
+                        </div>--->
                         
-                       <!--- class="header-right ms-auto">
+                       <div class="header-right ms-auto">
                             <ul class="navbar-nav m-0">
                                 {% if request.user.is_authenticated %}
                                     <li class="nav-item">
@@ -53,7 +53,7 @@
                                     </li>
                                 {% endif %}
                             </ul>
-                        </div>------>
+                        </div>
 
 
 

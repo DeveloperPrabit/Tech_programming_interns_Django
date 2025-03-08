@@ -11,23 +11,24 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-#from decouple import config
+from decouple import config  # Correct
+# Not "decoupl" or "decoupleX"
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY=config('SECRET_KEY')
+
+DEBUG=config('DEBUG')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-SECRET_KEY = "django-insecure-h!^(zn53jubzi34i^$uwa=dp5fgfib9$p2^6*8ioflme@nobef"
-DEBUG = True
 
-
-
-
-# SECURITY WARNING: keep the secret key used in production secret!
+#SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -53,6 +54,12 @@ EXTERNAL_APPS=[
 
 ]
 INSTALLED_APPS.extend(EXTERNAL_APPS)
+
+# Custom User Model for your app
+AUTH_USER_MODEL = 'main.CustomUser'
+
+
+#AUTH_USER_MODEL = 'Account.CustomUser'
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -88,13 +95,17 @@ WSGI_APPLICATION = "news_portals.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'news',
+		'USER': 'root',
+		'PASSWORD': '8#Xy7$wT9zJmQ$gL2rV!pZ0bK',
+		'HOST':'localhost',
+		'PORT':'3306',
+	}
 }
+
 
 
 # Password validation
@@ -140,8 +151,7 @@ MEDIA_URL="media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Custom User Model for your app
-AUTH_USER_MODEL = 'main.CustomUser'
+
 
 
 # Set the session cookie age (default is 2 weeks)

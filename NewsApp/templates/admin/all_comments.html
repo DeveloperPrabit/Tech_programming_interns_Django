@@ -78,7 +78,7 @@
                     </td>
                       <td>{{i.posted_date}}</td>
                       
-                      <td><a href="{% url 'view-comments' i.id %}" class="btn btn-success">
+                      <td><a href="{% url 'view_comment' i.id %}" class="btn btn-success">
                           View</a> <a href="{% url 'delete_comments' i.id %}" class="btn btn-danger">
                               DELETE</a></td>
                     </tr>{% endfor %}

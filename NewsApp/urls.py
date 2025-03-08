@@ -29,14 +29,13 @@ urlpatterns = [
   path('ManageSubadmin/',Manage_subadmin, name='manage_subadmin'),
   path('ViewSubadmin/<str:id>',View_subadmin, name='view_subadmin'),
   path('SubadminProfile/update/',Subadmin_profile_update, name='subadmin_profile_update'),
+  path('comment/<int:id>/',View_comment,name="view_comment"),
+  path('DeleteComments/<str:id>/',Delete_comments, name='delete_comments'),
+  path('UpdateCommentsStatus/', Update_comment_status, name='update-comments-status'),
+  path('doLogout/', doLogout, name='logout'),
+  path('Password/', CHANGE_PASSWORD, name='change_password'),
 
-
-
-
-
-
-
-
+  
 
 
 

@@ -164,8 +164,12 @@ def Category_detail(request, id):
         'category_counts': category_counts
     })
 
+
 def LOGIN(request):
     return render(request, 'login.html')  # Render login page if not authenticated
+
+
+
 
 
 

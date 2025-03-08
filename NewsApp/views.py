@@ -14,7 +14,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 User = get_user_model()
 
-
+@login_required(login_url='login')
 def dashboard(request):
     category_count = Category.objects.all().count()
     subcategory_count = Subcategory.objects.all().count()
@@ -30,6 +30,34 @@ def dashboard(request):
     
     return render(request, 'includes/dashboard.html', context)
 
+def doLogout(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url='DoLogin')  # Ensures only logged-in users can access
+def CHANGE_PASSWORD(request):
+    context = {}
+
+    # Fetch user instance
+    user = request.user  
+
+    if request.method == "POST":        
+        current = request.POST.get("cpwd")  # Get current password
+        new_pas = request.POST.get("npwd")  # Get new password
+
+        if user.check_password(current):  # Verify current password
+            user.set_password(new_pas)
+            user.save()
+            messages.success(request, 'Password changed successfully!')
+
+            # Re-login the user
+            login(request, user)
+            return redirect("dashboard")  # Redirect to the dashboard or home page
+        else:
+            messages.error(request, 'Current password is incorrect!')
+            return redirect("change_password")
+
+    return render(request, 'change-password.html', context)
 
 def Manage_subcategory(request):
     subcategory_list = Subcategory.objects.all()
@@ -514,3 +542,38 @@ def Subadmin_profile_update(request):
         "user1": user1,
     }
     return render(request, 'admin/subadmin-profile.html', context)
+
+
+def View_comment(request,id):    
+    view_comments = Comments.objects.filter(id=id)
+      
+    context = {
+         'view_comments':view_comments,
+         
+    }
+    return render(request,'admin/view-comments-details.html',context)
+
+def Delete_comments(request,id):
+    del_com = Comments.objects.get(id=id)
+    del_com.delete()
+    messages.success(request,'Record Delete Succeesfully!!!')
+    return redirect('all_comments')
+
+
+def Update_comment_status(request):
+    comments_id = request.POST.get('comm_id')
+    status_text = request.POST.get('status')
+
+    try:
+        comments_update = Comments.objects.get(id=comments_id)
+        comments_update.status = status_text
+        comments_update.save()
+
+        messages.success(request, "Status updated successfully")
+    except Comments.DoesNotExist:
+        messages.error(request, "Comments not found")
+    except Exception as e:
+        messages.error(request, f"An error occurred: {str(e)}")
+
+    return redirect('all_comments')
+

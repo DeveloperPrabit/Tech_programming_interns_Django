@@ -1,19 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
-from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
     USER_TYPES = [
-        ('1', 'intern'),
-        ('2', 'reader')
+        ('1', 'admin'),
+        ('2', 'subadmin')
     ]
     # user_type field with corrected default value
     user_type = models.CharField(choices=USER_TYPES, max_length=50, default='1')  
     profile_pic = models.ImageField(upload_to='profile_pics/')
-
+    
     # Resolve reverse accessor conflicts
     groups = models.ManyToManyField(Group, related_name="customuser_groups", blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
