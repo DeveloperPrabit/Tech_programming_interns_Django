@@ -1,12 +1,10 @@
 from django.contrib import admin
-from .models import Category, Subcategory, News, Page, Comments,CustomUser
+from .models import Category, Subcategory, News, Page, Comments, CustomUser
 from django.contrib.auth.admin import UserAdmin
 
-
-
-admin.site.site_header = 'News Admin Panel'        
-admin.site.index_title = 'News_portal'                
-admin.site.site_title = 'Welcome to  Online News portal' 
+admin.site.site_header = 'News Admin Panel'
+admin.site.index_title = 'News Portal'
+admin.site.site_title = 'Welcome to Online News Portal'
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
@@ -31,22 +29,22 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Subcategory)
 class SubcategoryAdmin(admin.ModelAdmin):
-    list_display = ('subcatname', 'cat_id', 'created_at')
+    list_display = ('subcatname', 'cat_id', 'created_at')  # Ensure 'subcatname' is correct
     search_fields = ('subcatname',)
     list_filter = ('cat_id',)
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'posttitle', 'cat_id', 'postedby', 'posted_date')
+    list_display = ('id', 'posttitle', 'cat_id', 'postedby', 'posted_date')  # Ensure 'posttitle' is correct
     list_filter = ('cat_id', 'posted_date')
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ('pagetitle', 'email', 'mobilenumber', 'created_at')
+    list_display = ('pagetitle', 'email', 'mobilenumber', 'created_at')  # Ensure 'pagetitle' is correct
     search_fields = ('pagetitle', 'email')
 
 @admin.register(Comments)
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ('news_id', 'name', 'email', 'status', 'posted_date')
     search_fields = ('name', 'email')
-    list_filter = ('status', 'posted_date')
+    list_filter = ('status','posted_date')

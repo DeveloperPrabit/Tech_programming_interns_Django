@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def BASE(request):    
-       return render(request,'base.html')
+    return render(request,'base.html')
 
 def BASE1(request):    
        return render(request,'base1.html')
@@ -45,6 +45,7 @@ def About(request):
 def Contact(request):
     first_page = Page.objects.first()
     context = {
+        
         "first_page": first_page,  # Change key from "page" to "first_page"
     }
     return render(request, 'contactus.html', context)
