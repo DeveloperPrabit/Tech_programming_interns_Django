@@ -95,16 +95,25 @@ WSGI_APPLICATION = "news_portals.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# DATABASES = {
+# 	'default': {
+# 		'ENGINE': 'django.db.backends.mysql',
+# 		'NAME': 'news',
+# 		'USER': 'root',
+# 		'PASSWORD': '8#Xy7$wT9zJmQ$gL2rV!pZ0bK',
+# 		'HOST':'localhost',
+# 		'PORT':'3306',
+# 	}
+# }
+
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'news',
-		'USER': 'root',
-		'PASSWORD': '8#Xy7$wT9zJmQ$gL2rV!pZ0bK',
-		'HOST':'localhost',
-		'PORT':'3306',
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+
 
 
 
