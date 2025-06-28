@@ -1,135 +1,255 @@
 {% load static %}
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>The Kavre Post</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f8f9fa;
+    }
+    .main-menu .nav-item {
+    margin-right: 8px; /* Adjust the gap as needed */
+}
+
+
+    .logo-section {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .logo-section h1 {
+        font-family: 'Times New Roman', serif;
+        font-weight: bold;
+        letter-spacing: 2px;
+        margin-bottom: 5px;
+        color: #2c3e50;
+    }
+
+    .tagline {
+        font-size: 16px;
+        color: #34495e;
+    }
+
+    .weather-info {
+        font-size: 14px;
+        text-align: right;
+        color: #555;
+    }
+
+    .header-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .news-bar {
+        border-top: 3px solid #d32f2f;
+        border-bottom: 1px solid #ccc;
+        background-color: #2c3e50;
+        padding: 8px 10px;
+        white-space: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .news-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .news-bar .title {
+        color: #d32f2f;
+        font-weight: bold;
+        margin-right: 20px;
+        text-transform: uppercase;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .news-item {
+        display: inline-block;
+        margin-right: 30px;
+        color: #ecf0f1;
+        font-weight: 500;
+        font-size: 15px;
+        text-decoration: none;
+    }
+
+    .news-item:hover {
+        text-decoration: underline;
+        color: #f39c12;
+    }
+
+    .main-menu {
+        background-color: #d32f2f;
+    }
+
+    .main-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        display: block;
+    }
+
+    .main-menu a:hover {
+        background-color: #b71c1c;
+        border-radius: 4px;
+    }
+
+    #search-input {
+        transition: 0.3s;
+    }
+
+    /* Social Icons */
+    .social-icons a {
+        color: #2c3e50;
+    }
+
+    .social-icons a:hover {
+        color: #d32f2f;
+    }
+</style>
 </head>
+<body>
 
-<header>
-    <div class="header-area">
-        <div class="main-header">
-            <!-- Top Header -->
-            <div class="header-top bg-dark text-white py-2 d-none d-sm-block">
-                <div class="container">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <!------<div class="header-left">
-                            <ul class="d-flex gap-3 m-0">
-                                <li><i class="fa fa-phone"></i> 
-                                    <a href="tel:{{ first_page.mobilenumber }}" class="text-white">{{ first_page.mobilenumber }}</a>
-                                </li>
-                                <li><i class="fa fa-envelope"></i> 
-                                    <a href="mailto:{{ first_page.email }}" class="text-white">{{ first_page.email }}</a>
-                                </li>
-                            </ul>
-                        </div>-->
-                        <li><i class="fa fa-phone"></i> 
-                            <a href="tel:{{ first_page.mobilenumber|default:'N/A' }}" class="text-white">{{ first_page.mobilenumber|default:'011 123 4567' }}</a>
-                        </li>
-                        <li><i class="fa fa-envelope"></i> 
-                            <a href="mailto:{{ first_page.email|default:'N/A' }}" class="text-white">{{ first_page.email|default:'info@onlinenewsportal.com' }}</a>
-                        </li>
-                        <!---<div class="header-info-right">
-                            <ul class="header-date">
-                                <a href="{% url 'login' %}"><li><span class="flaticon-calendar"></span> Admin</li></a>
-                            </ul>
-                        </div>--->
-                        
-                       <div class="header-right ms-auto">
-                            <ul class="navbar-nav m-0">
-                                    <li class="nav-item">
-                                        <a class="text-white" href="#">
-                                            <i class="fas fa-user-circle me-2"></i> Welcome, {{ user.username }}
-                                        </a>
-                                        <a class="nav-link text-white" href="{% url 'log_out' %}">
-                                            <i class="fas fa-sign-in-alt me-2"></i> LOGOUT
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" href="{% url 'LoginPage' %}">
-                                            <i class="fas fa-sign-in-alt me-2"></i> SIGN IN
-                                        </a>
-                                    </li>
-                            </ul>
-                        </div>
+<!-- Navigation Menu -->
+<nav class="navbar navbar-expand-md main-menu">
+  <div class="container-fluid">
+    <ul class="navbar-nav flex-grow-1 d-flex align-items-center">
 
+      <!-- Home Link -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'index' %}">Home</a>
+      </li>
 
-                      </div>
-                </div>
-            </div>
+      <!-- Show first 4 categories directly -->
+      {% for cat in category|slice:":4" %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'category_detail' id=cat.id %}">{{ cat.catname }}</a>
+        </li>
+      {% endfor %}
 
-            <!-- Middle Header -->
-            <div class="header-mid bg-info py-3">
-                <div class="container">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <!-- Logo -->
-                        <div class="logo">
-                            <a href="#"><h2 class="text-white fw-bold">Online News Portal</h2></a>
+      <!-- Show remaining categories in dropdown if more than 4 -->
+      {% if category|length > 4 %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              color: white; border-radius: 4px;>
+            More
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="moreDropdown" style="background-color: #fcfcfc;">
+            {% for cat in category|slice:"4:" %}
+              <li>
+                <a class="dropdown-item" href="{% url 'category_detail' id=cat.id %}" style="color: #5e5959;">
+                  {{ cat.catname }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
 
-                        </div>
-                         <!-- Search Nav -->
-                         <div class="nav-search search-switch">
-                            <a href="{% url 'search_news' %}"><i class="fa fa-search"></i></a>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
+    </ul>
 
-            <!-- Navigation Bar -->
-            <div class="header-bottom header-sticky bg-danger py-2">
-                <div class="container">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <!-- Logo (Sticky on Mobile) -->
-                        <div class="sticky-logo d-md-none">
-                            <a href="#"><img src="{% static 'assets1/img/logo/logo.png' %}" alt="Logo"></a>
-                        </div>
+    <!-- Right Section: Search and Login/Profile -->
+    <ul class="navbar-nav d-flex align-items-center ms-auto">
 
-                        <!-- Main Menu -->
-                        <nav class="main-menu d-none d-md-block">
-                            <ul id="navigation" class="d-flex gap-4 m-0">
-                                <li><a href="{% url 'index' %}" class="text-white">Home</a></li>
-                                <li><a href="{% url 'about' %}" class="text-white">About</a></li>
-                                <li class="position-relative">
-                                    <a href="./" class="text-white">Category <i class="fas fa-chevron-down"></i></a>
-                                    <ul class="submenu bg-light shadow position-absolute mt-2 p-2">
-                                        {% for cat in category %}
-                                            <li><a href="{% url 'category_detail' id=cat.id %}" class="text-dark">{{ cat.catname }}</a></li>
-                                        {% endfor %}
-                                    </ul>
-                                </li>
-                                <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
-                            </ul>
-                        </nav>
+      <!-- Search Icon -->
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'search_news' %}">
+          <i class="fa fa-search"></i>
+        </a>
+      </li>
 
-                        <!-- Social & Search (Aligned in the same row) -->
-                        <div class="d-flex align-items-center gap-3">
-                            <!-- Social Icons -->
-                            <ul class="d-flex gap-2 m-0 list-unstyled">
-                                <li><a href="" class="text-white"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#" class="text-white"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#" class="text-white"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#" class="text-white"><i class="fab fa-youtube"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      {% if user.is_authenticated %}
+        <li class="nav-item text-white d-flex align-items-center me-2">
+          Welcome, {{ user.first_name }}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'log_out' %}" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'login' %}" title="Login">
+            <i class="fas fa-user"></i>
+          </a>
+        </li>
+      {% endif %}
 
-            <!-- Mobile Menu -->
-            <div class="container d-md-none py-2">
-                <div class="mobile_menu"></div>
-            </div>
-        </div>
+    </ul>
+  </div>
+
+  <!-- Hidden Search Form -->
+  <div id="search-form-container" class="container-fluid bg-light py-2 d-none">
+    <form action="{% url 'search_news' %}" method="get" class="d-flex">
+      <input type="text" name="query" class="form-control me-2" placeholder="Search...">
+      <button type="submit" class="btn btn-outline-secondary">
+        <i class="fa fa-search"></i>
+      </button>
+    </form>
+  </div>
+</nav>
+
+<!-- Logo and Date Section -->
+<div class="container mt-3">
+  <div class="row align-items-center">
+    <div class="col-md-8 logo-section">
+      <h1>THE KAVRE POST</h1>
+      <div class="tagline">Voice of Kavre, Nepal</div>
     </div>
-</header>
+    <div class="col-md-4 weather-info">
+      <div>📅 {{ today_date }}</div>
+      <div>🌤 26°C Dhulikhel</div>
+      <div>Air Quality in Kavre: <span style="color: green;">35</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky News Bar and Social Icons -->
+<div class="header-bottom header-sticky shadow-sm">
+  <div class="news-bar">
+    <span class="title">What's News</span>
+    <marquee behavior="scroll" direction="left" scrollamount="5" loop="0" onmouseover="this.stop();" onmouseout="this.start();">
+      <span class="news-item">Kavre sees rise in local tourism this year</span>
+      <span class="news-item">New road construction project launched in Dhulikhel</span>
+      <span class="news-item">Farmers in Kavre shift to organic farming</span>
+      <span class="news-item">Dhulikhel Hospital expands health services</span>
+      <span class="news-item">Local schools implement new digital learning programs</span>
+    </marquee>
+  </div>
+</div>
+
+<div class="container py-2 d-flex justify-content-end social-icons">
+  <a href="#" class="text-dark me-3" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+  <a href="#" class="text-dark me-3" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+  <a href="#" class="text-dark me-3" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+  <a href="#" class="text-dark" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+</div>
+
+<!-- Search Toggle Script -->
 <script>
-    // Show input field when clicking on search icon
-    document.getElementById('search-button').addEventListener('click', function(event) {
-        let inputField = document.getElementById('search-input');
-        if (inputField.style.display === "none") {
-            event.preventDefault();  // Prevent form submission on first click
-            inputField.style.display = "inline-block";
-            inputField.focus();
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchToggle = document.getElementById("search-toggle");
+        const searchFormContainer = document.getElementById("search-form-container");
+
+        if(searchToggle){
+          searchToggle.addEventListener("click", function (e) {
+              e.preventDefault();
+              searchFormContainer.classList.toggle("d-none");
+          });
         }
     });
 </script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

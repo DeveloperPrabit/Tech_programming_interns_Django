@@ -1,126 +1,147 @@
 {% extends 'base1.html' %}
 {% block content %}
 {% load static %}
+{% load tz %}
 
-<div class="trending-area fix pt-30 gray-bg">
+<!-- Trending Section -->
+<div class="trending-area fix pt-30 pb-30">
     <div class="container">
-        <div class="trending-main">
-            <div class="row">
-                <!-- Left content (Main trending news) -->
-                <div class="col-lg-8">
-                    <div class="slider-active">
-                        {% for i in postnews %}
-                        <div class="single-slider">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{{ i.postimage.url }}" alt="Post Image" class="responsive-img">
-                                    <div class="trend-top-cap">
-                                        <span class="bgr">{{ i.cat_id.catname }}</span>
-                                        <h2><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle }}</a></h2>
-                                        <p>{{ i.posted_date }}</p>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-lg-8 slider-active">
+                {% for i in postnews %}
+                <div class="trending-top">
+                    <div class="trend-top-img position-relative">
+                        {% if i.postimage %}
+                            <img src="{{ i.postimage.url }}" class="media-box">
+                        {% elif i.video_file %}
+                            <video class="media-box" controls><source src="{{ i.video_file.url }}"></video>
+                        {% else %}
+                            <div class="media-box bg-secondary d-flex align-items-center justify-content-center text-white">No media</div>
+                        {% endif %}
+                        <div class="trend-top-cap position-absolute bottom-0 p-3 w-100 bg-gradient">
+                            <span class="badge bg-success">{{ i.cat_id.catname }}</span>
+                            <h2><a href="{% url 'view_single_news' i.id %}" class="text-white">{{ i.posttitle }}</a></h2>
+                            <p class="text-white">{{ i.posted_date }}</p>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
-
-                <!-- Right content (Trending and recent posts) -->
-                <div class="col-lg-4">
-                    <div class="row">
-                        {% for i in postnews|slice:":1" %}
-                        <div class="col-lg-12 col-md-6 col-sm-6">
-                            <div class="trending-top mb-30">
-                                <div class="trend-top-img">
-                                    <img src="{{ i.postimage.url }}" alt="">
-                                    <div class="trend-top-cap trend-top-cap2">
-                                        <span class="bgb">{{ i.cat_id.catname }}</span>
-                                        <h2><a href="">{{ i.posttitle }}</a></h2>
-                                        <p>{{ i.posted_date }}</p>
-                                    </div>
-                                </div>
-                            </div>
+                {% endfor %}
+            </div>
+            <div class="col-lg-4">
+                {% for i in postnews|slice:":1" %}
+                <div class="trending-top">
+                    <div class="trend-top-img position-relative">
+                        {% if i.postimage %}
+                            <img src="{{ i.postimage.url }}" class="media-box">
+                        {% elif i.video_file %}
+                            <video class="media-box" controls><source src="{{ i.video_file.url }}"></video>
+                        {% else %}
+                            <div class="media-box bg-secondary d-flex align-items-center justify-content-center text-white">No media</div>
+                        {% endif %}
+                        <div class="trend-top-cap position-absolute bottom-0 p-3 w-100 bg-gradient">
+                            <span class="badge bg-primary">{{ i.cat_id.catname }}</span>
+                            <h2><a href="{% url 'view_single_news' i.id %}" class="text-white">{{ i.posttitle }}</a></h2>
+                            <p class="text-white">{{ i.posted_date }}</p>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
-<section class="whats-news-area pt-50 pb-20">
+<!-- Latest News & Most Recent -->
+<section class="whats-news-area pt-30 pb-20">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
-                <div class="whats-news-wrapper">
-                    <div class="row align-items-end mb-4">
-                        <div class="col-md-4">
-                            <h3 class="section-title">Latest News</h3>
-                        </div>
-                        <div class="col-md-8">
-                            <nav>
-                                <div class="nav nav-tabs">
-                                    {% for i in category %}
-                                    <a class="nav-link {% if forloop.first %}active{% endif %}" href="{% url 'category_detail' id=i.id %}">
-                                        {{ i.catname }}
-                                    </a>
-                                    {% endfor %}
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        {% for i in postnews1 %}
-                        <div class="col-md-10 mb-4">
-                            <div class="card h-100">
-                                <img src="{{ i.postimage.url }}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <span class="badge bg-info">{{ i.cat_id.catname }}</span>
-                                    <h5 class="card-title mt-2"><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle }}</a></h5>
-                                    <p class="card-text"><small class="text-muted">{{ i.posted_date }}</small></p>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="most-recent-area">
-                    <h4 class="section-title mb-4">Most Recent</h4>
-                    {% for i in recentnews %}
-                    <div class="most-recent mb-4">
-                        <div class="position-relative">
-                            <img src="{{ i.postimage.url }}" class="img-fluid rounded" alt="">
-                            <div class="recent-overlay p-3">
-                                <span class="badge bg-warning">{{ i.cat_id.catname }}</span>
-                                <h5 class="text-white mt-2"><a href="{% url 'view_single_news' i.id %}" class="text-white">{{ i.posttitle }}</a></h5>
-                                <small class="text-light">{{ i.posted_date }}</small>
+                <h3 class="section-title">Latest News</h3>
+                <div class="row">
+                    {% for i in postnews1 %}
+                    <div class="col-md-6 col-lg-4 mb-4 d-flex">
+                        <div class="card w-100">
+                            {% if i.postimage %}
+                                <img src="{{ i.postimage.url }}" class="card-img-top media-box">
+                            {% elif i.video_file %}
+                                <video class="card-img-top media-box" controls><source src="{{ i.video_file.url }}"></video>
+                            {% else %}
+                                <div class="media-box bg-secondary d-flex align-items-center justify-content-center text-white">No media</div>
+                            {% endif %}
+                            <div class="card-body">
+                                <span class="badge bg-info">{{ i.cat_id.catname }}</span>
+                                <h5 class="card-title"><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle|truncatechars:50 }}</a></h5>
+                                <small class="text-muted">{{ i.posted_date }}</small>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
+
+                {% if postnews1.paginator.num_pages > 1 %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if postnews1.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">« First</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ postnews1.previous_page_number }}">Previous</a></li>
+                        {% endif %}
+                        {% for num in postnews1.paginator.page_range %}
+                            {% if postnews1.number == num %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                            {% elif num > postnews1.number|add:'-3' and num < postnews1.number|add:'3' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if postnews1.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ postnews1.next_page_number }}">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ postnews1.paginator.num_pages }}">Last »</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <h4 class="section-title">Most Recent</h4>
+                {% for i in recentnews %}
+                <div class="most-recent position-relative">
+                    {% if i.postimage %}
+                        <img src="{{ i.postimage.url }}">
+                    {% elif i.video_file %}
+                        <video controls><source src="{{ i.video_file.url }}"></video>
+                    {% else %}
+                        <div class="media-box bg-secondary d-flex align-items-center justify-content-center text-white">No media</div>
+                    {% endif %}
+                    <div class="recent-overlay">
+                        <span class="badge bg-warning">{{ i.cat_id.catname }}</span>
+                        <h5><a href="{% url 'view_single_news' i.id %}" class="text-white">{{ i.posttitle|truncatechars:50 }}</a></h5>
+                        <small>{{ i.posted_date }}</small>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 </section>
 
-<div class="weekly2-news-area pt-50 pb-30 bg-light">
+<!-- Most Popular Carousel -->
+<div class="weekly2-news-area pt-30 pb-30">
     <div class="container">
-        <h4 class="section-title mb-4">Most Popular</h4>
+        <h4 class="section-title">Most Popular</h4>
         <div class="weekly2-news-active owl-carousel">
             {% for i in recentnews %}
             <div class="weekly2-single">
                 <div class="weekly2-img">
-                    <img src="{{ i.postimage.url }}" class="img-fluid" alt="">
+                    {% if i.postimage %}
+                        <img src="{{ i.postimage.url }}" class="media-box">
+                    {% elif i.video_file %}
+                        <video class="media-box" controls><source src="{{ i.video_file.url }}"></video>
+                    {% else %}
+                        <div class="media-box bg-secondary d-flex align-items-center justify-content-center">No media</div>
+                    {% endif %}
                 </div>
-                <div class="weekly2-caption p-3">
-                    <h5><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle }}</a></h5>
+                <div class="weekly2-caption">
+                    <h5><a href="{% url 'view_single_news' i.id %}">{{ i.posttitle|truncatechars:40 }}</a></h5>
                     <small class="text-muted">{{ i.posted_date }}</small>
                 </div>
             </div>
@@ -130,18 +151,25 @@
 </div>
 
 <script>
-    $('.weekly2-news-active').owlCarousel({
-        loop: true,
-        margin: 20,
-        nav: true,
-        responsive: { 0: { items: 1 }, 600: { items: 2 }, 1000: { items: 3 }}
-    });
+    $(document).ready(function(){
+        $('.weekly2-news-active').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: false,
+            responsive: {
+                0: { items: 1 },
+                600: { items: 2 },
+                1000: { items: 3 }
+            }
+        });
 
-    $('.slider-active').slick({
-        dots: true,
-        arrows: true,
-        autoplay: true,
-        autoplaySpeed: 5000,
+        $('.slider-active').slick({
+            dots: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 5000
+        });
     });
 </script>
 

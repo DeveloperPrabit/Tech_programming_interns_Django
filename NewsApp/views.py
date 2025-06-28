@@ -14,7 +14,6 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 User = get_user_model()
 
-@login_required(login_url='login')
 def dashboard(request):
     category_count = Category.objects.all().count()
     subcategory_count = Subcategory.objects.all().count()
@@ -34,25 +33,28 @@ def doLogout(request):
     logout(request)
     return redirect('login')
 
-@login_required(login_url='DoLogin')  # Ensures only logged-in users can access
+#@login_required(login_url='DoLogin')  # Ensures only logged-in users can access
 def CHANGE_PASSWORD(request):
     context = {}
 
-    # Fetch user instance
     user = request.user  
 
     if request.method == "POST":        
-        current = request.POST.get("cpwd")  # Get current password
-        new_pas = request.POST.get("npwd")  # Get new password
+        current = request.POST.get("cpwd")
+        new_pas = request.POST.get("npwd")
 
-        if user.check_password(current):  # Verify current password
+        if user.check_password(current):
             user.set_password(new_pas)
             user.save()
             messages.success(request, 'Password changed successfully!')
 
-            # Re-login the user
+            # ✅ Set the backend explicitly
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+
+            # ✅ Re-login the user
             login(request, user)
-            return redirect("dashboard")  # Redirect to the dashboard or home page
+
+            return redirect("dashboard")
         else:
             messages.error(request, 'Current password is incorrect!')
             return redirect("change_password")

@@ -32,14 +32,9 @@ urlpatterns = [
   path('comment/<int:id>/',View_comment,name="view_comment"),
   path('DeleteComments/<str:id>/',Delete_comments, name='delete_comments'),
   path('UpdateCommentsStatus/', Update_comment_status, name='update-comments-status'),
-  path('doLogout/', doLogout, name='logout'),
   path('Password/', CHANGE_PASSWORD, name='change_password'),
 
-  
-
-
-
-  #for admin profile
-  path("adminprofile/",Admin_profile,name="admin_profile"),
-  path("adminprofile_update/,",Admin_profile_update,name="admin_profile_update")
+  #for admin profile\
+    path('adminprofile/',admin_profile, name='admin_profile'),
+    path("adminprofile_update/,",admin_profile_update,name="admin_profile_update")
 ]

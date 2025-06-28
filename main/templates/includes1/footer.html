@@ -1,35 +1,130 @@
-
 {% load static %}
-<footer>
-    <!-- Footer Start-->
-    <div class="footer-main footer-bg">
-        
-        <!-- footer-bottom aera -->
-        <div class="footer-bottom-area footer-bg">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-xl-12 ">
-                            <div class="footer-copy-right text-center">
-                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright BY &copy;<script>document.write(new Date().getFullYear());</script> News Portal System
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                            </div>
+<footer class="footer-area text-white pt-5 pb-3">
+    <div class="container">
+        <div class="row">
+            <!-- Company Info -->
+            <div class="col-md-4 mb-4">
+                <h3 class="footer-logo mb-3">KavreNes</h3>
+                <p class="text-light">KavreNews.com</p>
+                <ul class="footer-list list-unstyled">
+                    <li><a href="{% url 'contact' %}" class="text-white">Contact Us</a></li>
+                    <li><a href="{% url 'about' %}" class="text-white">About Us</a></li>
+                    <li>Registration No: 219/079-74</li>
+                    <li>Kavre news HD</li>
+                    <li>Image Group Of Company</li>
+                    <li>Kathmandu 44600</li>
+                    <li>Email: <a href="mailto:kavreews2@gmail.com" class="text-white">kavrenews2@gmail.com</a></li>
+                   
+                </ul>
+            </div>
+
+            <!-- Department Info -->
+            <div class="col-md-4 mb-4">
+                <h4 class="footer-heading mb-3">Department of Image Group of Company</h4>
+                <ul class="department-list list-unstyled">
+                    <li class="mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked disabled>
+                            <label class="form-check-label">Director:sabina tamang</label>
                         </div>
+                    </li>
+                    <li class="mb-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" checked disabled>
+                            <label class="form-check-label">Editor: Mamata Nepal</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Newsletter & Social -->
+            <div class="col-md-4 mb-4">
+                <h4 class="footer-heading mb-3">Subscribe to Newsletter</h4>
+                <form class="mb-4">
+                    <div class="form-group mb-2">
+                        <input type="email" class="form-control" placeholder="Your email address">
                     </div>
+                    <button type="submit" class="btn btn-light text-dark">Subscribe</button>
+                </form>
+
+                <h4 class="footer-heading mb-3">Follow Us</h4>
+                <div class="social-links">
+                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Footer End-->
-</footer>
-<!-- Search model Begin -->
-<div class="search-model-box">
-    <div class="d-flex align-items-center h-100 justify-content-center">
-        <div class="search-close-btn">+</div>
-        <form class="search-model-form"  method="get" action="">
-            <input type="text" id="search-input" name="q" placeholder="Search by title or category">  <button type="submit">Search</button>
-        </form>
+
+{% load tz %}  {# Load timezone tag to use 'now' #}
+
+<!-- Copyright -->
+<div class="row mt-3">
+    <div class="col-12 text-center">
+        <p class="text-light mb-1">
+            ©{% now "Y" %} Kavre News – Online News Portal of Nepal | Website by KavreNews.com
+        </p>
     </div>
 </div>
-<!-- Search model end -->
+
+
+    </div>
+</footer>
+
+<!-- Font Awesome (Social Icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- Footer Styles -->
+<style>
+    .footer-area {
+        background-color: #c62828 !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-logo {
+        font-size: 28px;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .footer-heading {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ffffff;
+        border-bottom: 2px solid #ffffff;
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+
+    .footer-list li {
+        margin-bottom: 8px;
+        color: #f1f1f1;
+    }
+
+    .footer-list a {
+        color: #f1f1f1;
+        text-decoration: none;
+    }
+
+    .footer-list a:hover,
+    .social-links a:hover {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+
+    .department-list .form-check-label {
+        color: #f1f1f1;
+    }
+
+    .department-list .form-check-input:checked {
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }
+
+    .social-links a {
+        font-size: 20px;
+        transition: color 0.3s ease;
+    }
+</style>
+

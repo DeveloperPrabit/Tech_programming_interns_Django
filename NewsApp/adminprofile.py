@@ -1,65 +1,35 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from main.models import CustomUser
-from django.contrib.auth import authenticate, login,logout
-from django.shortcuts import render, redirect
-from django.contrib import messages
 
+def admin_profile(request):
+    user = get_object_or_404(CustomUser, pk=request.user.pk)
+    return render(request, 'profile.html', {'user': user})
 
-def Admin_profile(request):
-    # Fetch user profile based on the logged-in user
-    try:
-        user = CustomUser.objects.get(id=request.user.id)
-    except CustomUser.DoesNotExist:
-        messages.error(request, "User not found.")
-        return redirect('index')  # Redirect to home if user doesn't exist
-
-    context = {
-        "user": user,
-    }
-    return render(request, 'admin/profile/profile.html', context)
-
-
-def Admin_profile_update(request):
+def admin_profile_update(request):
     if request.method == "POST":
-        profile_pic = request.FILES.get('profile_pic')
+        profile_picture = request.FILES.get('profile_picture')  # must match input name
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
 
         try:
-            # Get the current user
-            customuser = CustomUser.objects.get(id=request.user.id)
-            
-            # Update fields if new values are provided
+            customuser = CustomUser.objects.get(pk=request.user.pk)
             customuser.first_name = first_name
             customuser.last_name = last_name
-            customuser.email = email
-            customuser.username = username
 
-            # If a profile picture is provided, update it
-            if profile_pic:
-                customuser.profile_pic = profile_pic
+            if profile_picture:
+                customuser.profile_picture = profile_picture
 
             customuser.save()
             messages.success(request, "Your profile has been updated successfully.")
-            return redirect('admin_profile')  # Redirect to profile view
+            return redirect('admin_profile')
 
         except CustomUser.DoesNotExist:
             messages.error(request, "User profile not found.")
-            return redirect('home')  # Redirect to home if user doesn't exist
-        
+            return redirect('dashboard')
+
         except Exception as e:
             messages.error(request, f"Profile update failed: {str(e)}")
-    
-    # If the request method is GET, just render the profile update form
-    user = CustomUser.objects.get(id=request.user.id)
-    context = {
-        "user": user,
-    }
-    return render(request, 'profile.html', context)
+            return redirect('admin_profile')
 
-
-
+    return redirect('admin_profile')

@@ -1,14 +1,6 @@
-/**
-* Template Name: NiceAdmin
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Updated: Apr 20 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
+body {
+  background-color: white !important;
+}
 :root {
   scroll-behavior: smooth;
 }
@@ -16,7 +8,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
-  color: #444444;
+  color: hsl(0, 13%, 88%) important;
 }
 
 a {
@@ -1274,3 +1266,106 @@ h6 {
                 gap: 15px;
             }
         }
+
+/*for the new register page */
+    body {
+      background: rgb(131, 133, 134);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .register-card {
+      max-width: 500px;
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-body {
+      padding: 2.5rem;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #495057;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #4e73df;
+      box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.25);
+    }
+
+    .btn-primary {
+      background-color: #4e73df;
+      border: none;
+      padding: 0.75rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #3b5abf;
+      transform: translateY(-1px);
+    }
+
+    .alert {
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .checkbox-container {
+      margin: 1.5rem 0;
+    }
+
+    .checkbox-container label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-container a {
+      color: #4e73df;
+      text-decoration: none;
+    }
+
+    .login-link {
+      margin-top: 1.5rem;
+      color: #6c757d;
+    }
+
+    .login-link a {
+      color: #4e73df;
+      font-weight: 500;
+    }
+
+    .g-recaptcha {
+      transform: scale(0.9);
+      transform-origin: left;
+    }
+
+    .password-strength {
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .title-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .title-section h5 {
+      font-weight: 600;
+      color: #2a2a2a;
+      margin-bottom: 0.5rem;
+    }
+
+    .title-section p {
+      color: #6c757d;
+    }
+  
